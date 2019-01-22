@@ -37,10 +37,48 @@ Custom properties:
 
 See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of available icons.
 
+## Importing icons
+
 Import format for each icon is "@iconify/react/{prefix}/{icon}" where {prefix} is collection prefix, {icon} is icon name.
+
 Import imports JSON data for icon, to render it use Icon or InlineIcon component.
 
 Each icon is split in its own file, so only icons that you import are compiled when you build React application.
+
+You can use any name for imported icon. For example:
+```
+import notCat from "@iconify/react/noto-v1/dog";
+```
+
+## Build script
+
+You can use build script with custom icon sets that have been converted to [Iconify JSON format](https://iconify.design/docs/json-icon-format/).
+
+Add your own JSON files to directory "json", run build script from command line:
+
+```
+node node_modules/@iconify/react/build --source json --target icons
+```
+where "json" is directory where JSON files are, "icons" is directory where components will be exported.
+
+There are more command line options:
+
+* --skip foo,bar: list of prefixes to ignore.
+* --filter foo,bar: list of prefixes to include. If set, all other prefixes will be ignored
+* --file json/custom.json: file to parse
+* --files json/custom.json,json/custom2.json: list of additional files to parse, separated by comma.
+* --package @iconify/json: parse JSON files in installed package. Use in combination with --dir if files are in sub-directory (see package.json for example).
+* --source json: directory where JSON files are located.
+* --dir json: sub-directory where JSON files are located, used in combination with --package (see package.json for example).
+* --target icons: directory where to save components. Build script will also create sub-directories with prefixes, so for example fa-home will be in icons/fa/home.js
+* --no-cleanup: prevent build script from deleting old files. By default everything in target directory is removed to clean up old build data, this will prevent clean up.
+* --silent: prevent build script from logging export process.
+
+Examples:
+```node node_modules/@iconify/react/build --source json --target icons
+node node_modules/@iconify/react/build --module @iconify/json --dir json --target iconify-icons --filter fa-brands,logos,brandico
+node node_modules/@iconify/react/build --module @iconify/json --dir json --target iconify-icons --skip fa-brands,logos,brandico --silent
+```
 
 ## License
 
