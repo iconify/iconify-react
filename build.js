@@ -24,6 +24,9 @@ let doCleanup = true;
 // Validate prefix
 let validatePrefix = true;
 
+// Ignore errors
+let ignoreErrors = false;
+
 // Source directory
 let sourceDir = null;
 
@@ -437,6 +440,10 @@ for (let i = 0; i < args.length; i++) {
             validatePrefix = true;
             break;
 
+        case '--ignore-errors':
+            ignoreErrors = true;
+            break;
+
         case '--silent':
         case '--no-log':
             log = false;
@@ -503,6 +510,9 @@ if (allowFiles !== null) {
 }
 
 if (!Object.keys(files).length) {
+    if (ignoreErrors) {
+        return;
+    }
     throw new Error('No JSON files to parse.');
 }
 
@@ -516,11 +526,17 @@ Object.keys(files).forEach(prefix => {
 
     // Load collection
     if (!collection.loadFromFile(source)) {
+        if (ignoreErrors) {
+            return;
+        }
         throw new Error('Error loading collection from ' + source);
     }
 
     if (collection.prefix() !== prefix) {
         if (validatePrefix) {
+            if (ignoreErrors) {
+                return;
+            }
             throw new Error('Collection loaded from ' + source + ' has prefix "' + collection.prefix() + '", expected "' + prefix + '"');
         }
         prefix = collection.prefix();

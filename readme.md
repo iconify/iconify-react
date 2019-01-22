@@ -73,6 +73,8 @@ There are more command line options:
 * --target icons: directory where to save components. Build script will also create sub-directories with prefixes, so for example fa-home will be in icons/fa/home.js
 * --no-cleanup: prevent build script from deleting old files. By default everything in target directory is removed to clean up old build data, this will prevent clean up.
 * --silent: prevent build script from logging export process.
+* --ignore-prefix: do not validate prefixes. By default build script requires filenames to match prefixes, so for example "fa-solid" should be in "fa-solid.json", adding this to command line will prevent that check.
+* --ignore-errors: do not stop on error. This applies only to invalid json files. Script will throw errors even with --ignore-errors when there are bad command line parameters.
 
 Examples:
 ```node node_modules/@iconify/react/build --source json --target icons
