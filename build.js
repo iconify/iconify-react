@@ -301,7 +301,7 @@ const exportCollection = (collection, dir) => {
     }
 
     if (log) {
-        console.log('[' + collection.prefix() + ']: Exported ' + icons + ' icons' + (aliases ? ', ' + aliases + ' aliases.' : ''));
+        console.log('[' + collection.prefix() + '] Exported ' + icons + ' icons' + (aliases ? ', ' + aliases + ' aliases.' : ''));
     }
     return true;
 };
