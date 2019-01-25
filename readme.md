@@ -2,6 +2,20 @@
 
 This is a development version. Proper readme will be here later
 
+## Installation
+
+If you are using NPM:
+```
+npm install @iconify/react
+```
+
+If you are using Yarn:
+```
+yarn add @iconify/react
+```
+
+Package does not include icons. Icons will be generated during installation.
+
 ## Usage
 
 ```
