@@ -2,7 +2,7 @@
   "name": "@iconify/react",
   "description": "Iconify icon component for React.",
   "author": "Vjacheslav Trushkin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "bugs": "https://github.com/iconify-design/iconify-react/issues",
   "homepage": "https://github.com/iconify-design/iconify-react",
@@ -11,7 +11,7 @@
     "url": "git+ssh://git@github.com/iconify-design/iconify-react.git"
   },
   "scripts": {
-    "prepare": "node build --package @iconify/json --dir json --target {dir}"
+    "install": "node build"
   },
   "main": "icon.js",
   "dependencies": {

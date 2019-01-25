@@ -183,6 +183,7 @@ const stringify = data => JSON.stringify(data, null, '\t');
  * Export collection
  *
  * @param collection
+ * @param dir
  * @return {boolean}
  */
 const exportCollection = (collection, dir) => {
@@ -310,6 +311,10 @@ const exportCollection = (collection, dir) => {
     Resolve command line parameters
  */
 let args = process.argv.slice(2);
+if (!args.length) {
+    // Use default build command
+    args = '--package @iconify/json --dir json --target {dir}'.split(' ');
+}
 
 for (let i = 0; i < args.length; i++) {
     let dir;

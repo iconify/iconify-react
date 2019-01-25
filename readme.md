@@ -16,6 +16,15 @@ yarn add @iconify/react
 
 Package does not include icons. Icons will be generated during installation.
 
+## Updating
+
+Unfortunately NPM and Yarn do not re-run installation script when updating dependencies. This makes it impossible to automatically keep icons up to date.
+
+To re-build icons you can either re-install @iconify/react (uninstall it then install it again) or run this:
+```
+node node_modules/@iconify/react/build
+```
+
 ## Usage
 
 ```
