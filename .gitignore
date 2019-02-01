@@ -1,6 +1,7 @@
 *
-!.npmignore
+!.*
 !*.js
 !*.json
 !*.md
 !*.txt
+.DS_Store
