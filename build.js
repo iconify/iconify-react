@@ -40,6 +40,9 @@ let allowFiles = null;
 let allowSets = null,
     skipSets = null;
 
+// True if .d.ts files should be added
+let typeScript = true;
+
 /**
  * Recursively create directory
  *
@@ -191,6 +194,17 @@ const exportCollection = (collection, dir) => {
         aliases = 0;
 
     /**
+     * Export typescript file
+     *
+     * @param {string} filename
+     * @param {string} [name]
+     */
+    const exportTS = (filename, name) => {
+        name = typeof name === 'string' ? name : 'data';
+        fs.writeFileSync(filename + '.d.ts', 'declare const ' + name + ': object;\nexport default ' + name + ';\n');
+    };
+
+    /**
      * Export icon
      *
      * @param name
@@ -212,6 +226,9 @@ const exportCollection = (collection, dir) => {
         let content = stringify(data);
         content = 'export default ' + content + ';\n';
         fs.writeFileSync(dir + '/' + name + '.js', content, 'utf8');
+        if (typeScript) {
+            exportTS(dir + '/' + name);
+        }
     };
 
     /**
@@ -233,6 +250,9 @@ const exportCollection = (collection, dir) => {
             let content = 'import data from \'./' + parent + '\';\n';
             content += 'export default data;\n';
             fs.writeFileSync(dir + '/' + name + '.js', content, 'utf8');
+            if (typeScript) {
+                exportTS(dir + '/' + name);
+            }
         };
 
         const exportComplexAlias = () => {
@@ -269,6 +289,9 @@ const exportCollection = (collection, dir) => {
 
             content += '\nexport default alias;\n';
             fs.writeFileSync(dir + '/' + name + '.js', content, 'utf8');
+            if (typeScript) {
+                exportTS(dir + '/' + name, 'alias');
+            }
             return true;
         };
 
@@ -313,7 +336,7 @@ const exportCollection = (collection, dir) => {
 let args = process.argv.slice(2);
 if (!args.length) {
     // Use default build command
-    args = '--package @iconify/json --dir json --target {dir}'.split(' ');
+    args = '--package @iconify/json --dir json --target {dir} --typescript'.split(' ');
 }
 
 for (let i = 0; i < args.length; i++) {
@@ -443,6 +466,14 @@ for (let i = 0; i < args.length; i++) {
 
         case '--validate-prefix':
             validatePrefix = true;
+            break;
+
+        case '--no-typescript':
+            typeScript = false;
+            break;
+
+        case '--typescript':
+            typeScript = true;
             break;
 
         case '--ignore-errors':

@@ -1,6 +1,10 @@
 # Iconify for React
 
-This is a development version. Proper readme will be here later
+Iconify is a modern open source SVG alternative to glyph fonts. It is a unified framework, aimed to offer all popular icon sets with one easy to use syntax: Font Awesome, Material Design Icons, Jam Icons and several emoji sets: Noto Emoji, Twemoji, EmojiOne, Firefox OS Emoji.
+
+You can use over 30,000 icons without installing multiple dependencies. It can also be used with custom and premium icon sets. No fonts, no massive packages.
+
+Iconify for React generates separate files for each icon, so when compiling your application only icons you use in project will be bundled. That means you can use FontAwesome, MDI, Vaadin, EmojiOne and other icons on same page without loading massive amounts of data.
 
 ## Installation
 
@@ -54,7 +58,13 @@ Custom properties:
 * flip - string attribute, same as hFlip and vFlip. Value is "horizontal", "vertical" or "horizontal,vertical"
 * rotate - rotate icon. Value is number 0-3 (1 = 90deg, 2 = 180deg, 3 = 270deg) or string "90deg", "180deg", "270deg"
 * color - icon color, usable only for colorless icons. By default colorless icons use currentColor, so you can set color using stylesheet by setting text color. This property can override it.
-* align - icon alignment. It matters only when width and height are both set and width/height ratio doesn't match icon ratio. Value is a string that includes any of these values separated by comma: horizontal alignement: "left", "center", "right", vertical alignment: "top", "middle", "bottom", slice: "meet", "slice". Example: align="left,middle,slice". Default value is "center,middle,meet"
+* align - icon alignment. It matters only when width and height are both set and width/height ratio doesn't match icon ratio. Value is a string that includes any of these values separated by comma: horizontal alignment: "left", "center", "right", vertical alignment: "top", "middle", "bottom", slice: "meet", "slice". Example: align="left,middle,slice". Default value is "center,middle,meet"
+
+## TypeScript
+
+Iconify for React is compatible with TypeScript. By default build script generates .d.ts files for each icon. See build script command line options below.
+
+If you are using TypeScript, only attributes "id", "className" and "style" are passed to node. If you want to pass other custom attributes, edit icon.d.ts file (or suggest a change by opening issue on @iconify/react repository).
 
 ## Icons list
 
@@ -80,7 +90,7 @@ You can use build script with custom icon sets that have been converted to [Icon
 Add your own JSON files to directory "json", run build script from command line:
 
 ```
-node node_modules/@iconify/react/build --source json --target icons
+node node_modules/@iconify/react/build --source json --target icons --typescript
 ```
 where "json" is directory where JSON files are, "icons" is directory where components will be exported.
 
@@ -94,6 +104,8 @@ There are more command line options:
 * --source json: directory where JSON files are located.
 * --dir json: sub-directory where JSON files are located, used in combination with --package (see package.json for example).
 * --target icons: directory where to save components. Build script will also create sub-directories with prefixes, so for example fa-home will be in icons/fa/home.js
+* --typescript: export .d.ts files for each icon. This option doubles amount of files, but it is needed if you are using React with TypeScript. Enabled by default.
+* --no-typescript: do not export .d.ts files. Use this if you are not using TypeScript to reduce amount of exported files.
 * --no-cleanup: prevent build script from deleting old files. By default everything in target directory is removed to clean up old build data, this will prevent clean up.
 * --silent: prevent build script from logging export process.
 * --ignore-prefix: do not validate prefixes. By default build script requires filenames to match prefixes, so for example "fa-solid" should be in "fa-solid.json", adding this to command line will prevent that check.
