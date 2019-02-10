@@ -16,7 +16,7 @@
 	"main": "icon.js",
 	"dependencies": {
 		"@iconify/json": "^1.0.60",
-		"@iconify/json-tools": "^1.0.4",
+		"@iconify/json-tools": "^1.0.5",
 		"react": "^16.8.1"
 	}
 }

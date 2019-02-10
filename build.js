@@ -215,7 +215,7 @@ const exportCollection = (collection, dir) => {
             throw new Error('Got null for icon ' + name);
         }
 
-        data = Object.assign({}, data);
+        data = Object.assign(Object.create(null), data);
         delete data.parent;
         Object.keys(data).forEach(key => {
             if (key.slice(0, 1) === '_') {
@@ -242,7 +242,7 @@ const exportCollection = (collection, dir) => {
             throw new Error('Got null for alias ' + name);
         }
 
-        data = Object.assign({}, data);
+        data = Object.assign(Object.create(null), data);
 
         let parent = data.parent;
 
@@ -257,7 +257,7 @@ const exportCollection = (collection, dir) => {
 
         const exportComplexAlias = () => {
             let content = 'import data from \'./' + parent + '\';\n';
-            content += '\nlet alias = Object.assign({}, data);\n';
+            content += '\nlet alias = Object.assign(Object.create(null), data);\n';
 
             let keys = Object.keys(data);
             for (let i = 0; i < keys.length; i++) {
@@ -503,7 +503,7 @@ if (sourceDir === null) {
 /*
     Find all icon sets
  */
-let files = {};
+let files = Object.create(null);
 if (allowFiles !== null) {
     // Use only allow files
     allowFiles.forEach(file => {
@@ -555,7 +555,7 @@ if (!Object.keys(files).length) {
 /*
     Load and export all collections
  */
-let parsed = {};
+let parsed = Object.create(null);
 Object.keys(files).forEach(prefix => {
     let source = files[prefix],
         collection = new tools.Collection(prefix);
