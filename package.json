@@ -14,6 +14,7 @@
 		"install": "node build"
 	},
 	"main": "icon.js",
+	"types": "icon.d.ts",
 	"dependencies": {
 		"@iconify/json": "^1.0.65",
 		"@iconify/json-tools": "^1.0.5",
