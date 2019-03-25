@@ -2,7 +2,7 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify-design/iconify-react/issues",
 	"homepage": "https://github.com/iconify-design/iconify-react",
@@ -16,7 +16,7 @@
 	"main": "icon.js",
 	"types": "icon.d.ts",
 	"dependencies": {
-		"@iconify/json": "^1.0.80",
+		"@iconify/json": "^1.0.85",
 		"@iconify/json-tools": "^1.0.5",
 		"react": "^16.8.3"
 	}
