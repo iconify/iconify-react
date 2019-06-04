@@ -2,7 +2,7 @@
 
 Iconify is a modern open source SVG alternative to glyph fonts. It is a unified framework, aimed to offer all popular icon sets with one easy to use syntax: Font Awesome, Material Design Icons, Jam Icons and several emoji sets: Noto Emoji, Twemoji, EmojiOne, Firefox OS Emoji.
 
-You can use over 30,000 icons without installing multiple dependencies. It can also be used with custom and premium icon sets. No fonts, no massive packages.
+You can use over 40,000 icons without installing multiple dependencies. It can also be used with custom and premium icon sets. No fonts, no massive packages.
 
 Iconify for React generates separate files for each icon, so when compiling your application only icons you use in project will be bundled. That means you can use FontAwesome, MDI, Vaadin, EmojiOne and other icons on same page without loading massive amounts of data.
 
@@ -18,24 +18,17 @@ If you are using Yarn:
 yarn add @iconify/react
 ```
 
-Package does not include icons. Icons will be generated during installation.
-
-## Updating
-
-Unfortunately NPM and Yarn do not re-run installation script when updating dependencies. This makes it impossible to automatically keep icons up to date.
-
-To re-build icons you can either re-install @iconify/react (uninstall it then install it again) or run this after updating dependencies:
-```
-node node_modules/@iconify/react/build
-```
+Package does not include icons. Icons are split into separate packages that available at NPM. See below.
 
 ## Usage
 
+Install `@iconify/react` and package for selected icons set, import Icon and/or InlineIcon from `@iconify/react` and icon data for icon you want to use:
 ```
 import { Icon, InlineIcon } from "@iconify/react";
-import home from "@iconify/react/mdi-light/home";
-import faceWithMonocle from "@iconify/react/twemoji/face-with-monocle";
+import home from "@iconify/icons-mdi-light/home";
+import faceWithMonocle from "@iconify/icons-twemoji/face-with-monocle";
 ```
+Then use Icon or InlineIcon component with icon data as "icon" parameter:
 ```
 <Icon icon={home} />
 <p>This is some text with <InlineIcon icon={faceWithMonocle} /></p>
@@ -62,60 +55,112 @@ Custom properties:
 
 ## TypeScript
 
-Iconify for React is compatible with TypeScript. By default build script generates .d.ts files for each icon. See build script command line options below.
+Iconify for React is compatible with TypeScript.
 
-If you are using TypeScript, only attributes "id", "className" and "style" are passed to node. If you want to pass other custom attributes, edit icon.d.ts file (or suggest a change by opening issue on @iconify/react repository).
+If you are using TypeScript, only attributes "id", "className" and "style" are passed to node. If you want to pass other custom attributes, edit dist/icon.d.ts file (or suggest a change by opening issue on @iconify/react repository).
 
-## Icons list
+## Icon packages
 
-See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of available icons.
+As of version 1.1.0 this package no longer includes icons. There are over 40k icons, each in its won file. That takes a lot of disc space.
+Because of that icons were moved to multiple separate packages, one package per icon set.
 
-## Importing icons
+You can find all available icons at https://iconify.design/icon-sets/
 
-Import format for each icon is "@iconify/react/{prefix}/{icon}" where {prefix} is collection prefix, {icon} is icon name.
+Browse or search icons, click any icon and you will see "React" tab that will give you exact code for React component.
 
-Import imports JSON data for icon, to render it use Icon or InlineIcon component.
+Import format for each icon is "@iconify/icon-{prefix}/{icon}" where {prefix} is collection prefix, {icon} is icon name.
 
-Each icon is split in its own file, so only icons that you import are compiled when you build React application.
+Usage examples for few popular icon packages:
 
-You can use any name for imported icon. For example:
+
+### Material Design Icons
+
+Package: https://www.npmjs.com/package/@iconify/icons-mdi
+
+Icons list: https://iconify.design/icon-sets/mdi/
+
+Installation:
 ```
-import notCat from "@iconify/react/noto-v1/dog";
+npm install @iconify/icons-mdi
+```
+Usage:
+```
+import { Icon, InlineIcon } from "@iconify/react";
+import home from "@iconify/icons-mdi/home";
+import accountCheck from "@iconify/icons-mdi/account-check";
+```
+```
+<Icon icon={home} />
+<p>This is some text with <InlineIcon icon={accountCheck} /></p>
 ```
 
-## Build script
 
-You can use build script with custom icon sets that have been converted to [Iconify JSON format](https://iconify.design/docs/json-icon-format/).
+### Simple Icons (big collection of logos)
 
-Add your own JSON files to directory "json", run build script from command line:
+Package: https://www.npmjs.com/package/@iconify/icons-simple-icons
 
+Icons list: https://iconify.design/icon-sets/simple-icons/
+
+Installation:
 ```
-node node_modules/@iconify/react/build --source json --target icons --typescript
+npm install @iconify/icons-mdi
 ```
-where "json" is directory where JSON files are, "icons" is directory where components will be exported.
-
-There are more command line options:
-
-* --skip foo,bar: list of prefixes to ignore.
-* --filter foo,bar: list of prefixes to include. If set, all other prefixes will be ignored
-* --file json/custom.json: file to parse
-* --files json/custom.json,json/custom2.json: list of additional files to parse, separated by comma.
-* --package @iconify/json: parse JSON files in installed package. Use in combination with --dir if files are in sub-directory (see package.json for example).
-* --source json: directory where JSON files are located.
-* --dir json: sub-directory where JSON files are located, used in combination with --package (see package.json for example).
-* --target icons: directory where to save components. Build script will also create sub-directories with prefixes, so for example fa-home will be in icons/fa/home.js
-* --typescript: export .d.ts files for each icon. This option doubles amount of files, but it is needed if you are using React with TypeScript. Enabled by default.
-* --no-typescript: do not export .d.ts files. Use this if you are not using TypeScript to reduce amount of exported files.
-* --no-cleanup: prevent build script from deleting old files. By default everything in target directory is removed to clean up old build data, this will prevent clean up.
-* --silent: prevent build script from logging export process.
-* --ignore-prefix: do not validate prefixes. By default build script requires filenames to match prefixes, so for example "fa-solid" should be in "fa-solid.json", adding this to command line will prevent that check.
-* --ignore-errors: do not stop on error. This applies only to invalid json files. Script will throw errors even with --ignore-errors when there are bad command line parameters.
-
-Examples:
-```node node_modules/@iconify/react/build --source json --target icons
-node node_modules/@iconify/react/build --module @iconify/json --dir json --target iconify-icons --filter fa-brands,logos,brandico
-node node_modules/@iconify/react/build --module @iconify/json --dir json --target iconify-icons --skip fa-brands,logos,brandico --silent
+Usage:
 ```
+import { Icon, InlineIcon } from "@iconify/react";
+import behanceIcon from "@iconify/icons-simple-icons/behance";
+import mozillafirefoxIcon from "@iconify/icons-simple-icons/mozillafirefox";
+```
+```
+<Icon icon={behanceIcon} />
+<p>Mozilla Firefox <InlineIcon icon={mozillafirefoxIcon} /> is the best browser!</p>
+```
+
+### Font Awesome 5 Solid
+
+Package: https://www.npmjs.com/package/@iconify/icons-fa-solid
+
+Icons list: https://iconify.design/icon-sets/fa-solid/
+
+Installation:
+```
+npm install @iconify/icons-fa-solid
+```
+Usage:
+```
+import { Icon, InlineIcon } from "@iconify/react";
+import toggleOn from "@iconify/icons-fa-solid/toggle-on";
+import chartBar from "@iconify/icons-fa-solid/chart-bar";
+```
+```
+<Icon icon={chartBar} />
+<p><InlineIcon icon={toggleOn} /> Click to toggle</p>
+```
+
+### Noto Emoji
+
+Package: https://www.npmjs.com/package/@iconify/icons-noto
+
+Icons list: https://iconify.design/icon-sets/noto/
+
+Installation:
+```
+npm install @iconify/icons-noto
+```
+Usage:
+```
+import { Icon, InlineIcon } from "@iconify/react";
+import greenApple from "@iconify/icons-noto/green-apple";
+import huggingFace from "@iconify/icons-noto/hugging-face";
+```
+```
+<Icon icon={greenApple} />
+<p>Its time for hugs <InlineIcon icon={huggingFace} />!</p>
+```
+
+### Other icon sets
+
+There are over 50 icon sets. This readme shows only few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for list of available icon sets. Click any icon to see code.
 
 ## License
 

@@ -1,8 +1,4 @@
-*
-!.*
-!*.js
-!*.d.ts
-!*.json
-!*.md
-!*.txt
 .DS_Store
+.idea
+node_modules
+dist/*
