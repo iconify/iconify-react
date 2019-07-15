@@ -2,7 +2,7 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify-react/issues",
 	"homepage": "https://github.com/iconify/iconify-react",
@@ -19,8 +19,8 @@
 		"react": "^16.8.3"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.4.5",
-		"@babel/preset-env": "^7.4.5",
+		"@babel/core": "^7.5.4",
+		"@babel/preset-env": "^7.5.4",
 		"babel-plugin-transform-react-jsx": "^6.24.1"
 	}
 }

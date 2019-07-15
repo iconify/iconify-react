@@ -17,6 +17,11 @@ function fileExists(filename) {
 const rootDir = __dirname;
 let presets = JSON.parse(fs.readFileSync(rootDir + '/.babelrc', 'utf8'));
 
+try {
+    fs.mkdirSync(rootDir + '/dist', 0o755);
+} catch (err) {
+}
+
 ['icon'].forEach(filename => {
     // Transpile .js file
     let source = rootDir + '/src/' + filename + '.js',
