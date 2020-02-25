@@ -59,7 +59,17 @@ const defaultAttributes = {
  * @return {object}
  */
 function normalize(data) {
-    let item = Object.assign(Object.create(null), defaultAttributes, data);
+    // Object.create, compatible with IE11
+    let item = Object.create(null);
+    let key;
+    for (key in defaultAttributes) {
+        item[key] = defaultAttributes[key];
+    }
+    for (key in data) {
+        item[key] = data[key];
+    }
+
+    // Attributes derived from other attributes
     if (item.inlineTop === void 0) {
         item.inlineTop = item.top;
     }
@@ -503,9 +513,9 @@ class SVG {
         prefix = 'IconifyId-' + Date.now().toString(16) + '-' + (Math.random() * 0x1000000 | 0).toString(16) + '-';
 
         // Replace with unique ids
-        ids.forEach(function(id) {
+        ids.forEach(function (id) {
             let newID = prefix + idCounter;
-            idCounter ++;
+            idCounter++;
             body = strReplace('="' + id + '"', '="' + newID + '"', body);
             body = strReplace('="#' + id + '"', '="#' + newID + '"', body);
             body = strReplace('(#' + id + ')', '(#' + newID + ')', body);
@@ -552,17 +562,27 @@ function component(props, inline) {
         style.verticalAlign = iconData.style['vertical-align'];
     }
     if (props.style !== void 0) {
-        style = Object.assign(style, props.style);
+        for (let key in props.style) {
+            style[key] = props.style[key];
+        }
     }
 
     // Generate element attributes
-    let attributes = Object.assign({
+    let attributes = {
         xmlns: 'http://www.w3.org/2000/svg',
         focusable: false,
         style: style
-    }, customAttributes, iconData.attributes);
+    };
 
-    attributes.dangerouslySetInnerHTML = {__html: iconData.body};
+    let key;
+    for (key in customAttributes) {
+        attributes[key] = customAttributes[key];
+    }
+    for (key in iconData.attributes) {
+        attributes[key] = iconData.attributes[key];
+    }
+
+    attributes.dangerouslySetInnerHTML = { __html: iconData.body };
 
     // Generate SVG
     return React.createElement('svg', attributes, null);
