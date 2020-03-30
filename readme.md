@@ -111,7 +111,7 @@ Icons list: https://iconify.design/icon-sets/simple-icons/
 Installation:
 
 ```bash
-npm install @iconify/icons-mdi
+npm install @iconify/icons-simple-icons
 ```
 
 Usage:
