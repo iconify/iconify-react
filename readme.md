@@ -1,3 +1,7 @@
+This repository contains old version 1 of Iconify for React.
+
+The latest version has been moved to Iconify monorepo: https://github.com/iconify/iconify/tree/master/packages/react
+
 # Iconify for React
 
 Iconify is a modern open source SVG alternative to glyph fonts. It is a unified framework, aimed to offer all popular icon sets with one easy to use syntax: Font Awesome, Material Design Icons, Jam Icons and several emoji sets: Noto Emoji, Twemoji, EmojiOne, Firefox OS Emoji.
